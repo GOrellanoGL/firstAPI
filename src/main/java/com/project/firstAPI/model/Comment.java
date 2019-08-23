@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static java.util.Objects.isNull;
 
@@ -24,4 +26,13 @@ public class Comment {
     @JoinColumn(name = "publish_id", referencedColumnName = "id")
     @JsonIgnore
     private Publish publish;
+
+    @PrePersist
+    public void setTime() {
+        if (isNull(this.getDateComment())) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-mmm-yyyy");
+            LocalDateTime localDateTime = LocalDateTime.now();
+            this.dateComment = localDateTime.format(formatter);
+        }
+    }
 }

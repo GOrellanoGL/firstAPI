@@ -9,6 +9,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -28,4 +30,11 @@ public class Publish {
     private User user;
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "publish")
     private List<Comment> comments;
+
+    @PrePersist
+    public void setTime() {
+        if (isNull(this.getDatePublish())) {
+            this.datePublish = LocalDateTime.now();
+        }
+    }
 }
