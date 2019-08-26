@@ -2,8 +2,10 @@ package com.project.firstAPI.controller;
 
 import com.project.firstAPI.model.Publish;
 import com.project.firstAPI.model.User;
+import com.project.firstAPI.model.UserDTO;
 import com.project.firstAPI.repository.PublishRepository;
 import com.project.firstAPI.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
@@ -45,15 +48,15 @@ public class UserController {
 
     //Get all users
     @GetMapping("")
-    public List<User> getAllUser() {
+    public List<UserDTO> getAllUser() {
         List<User> users = userRepository.findAll();
-        return users;//users.stream().map(user -> convertToDto(user)).collect(Collectors.toList());
+        return users.stream().map(user -> convertToDto(user)).collect(Collectors.toList());
     }
 
-/*    private UserDTO convertToDto(User user) {
+    private UserDTO convertToDto(User user) {
         final ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(user, UserDTO.class);
-    }*/
+    }
 
     //Get specific user
     @GetMapping("/{id}")
