@@ -53,7 +53,7 @@ public class CommentController {
     }
 
     //Get count of comments by publish
-    @GetMapping(value = "")
+    @GetMapping(value = "/countCommentByPublish")
     public List<CommentByPublish> getCommentByPublishList() {
         return commentByPublishRepository.getCount();
     }

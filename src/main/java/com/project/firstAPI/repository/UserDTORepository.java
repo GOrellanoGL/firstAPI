@@ -13,6 +13,6 @@ import java.util.List;
 public interface UserDTORepository extends JpaRepository<UserDTO, Integer> {
     @Modifying
     @Transactional
-    @Query(value = "SELECT u.id, u.name, u.last_name FROM user;", nativeQuery = true)
+    @Query(value = "SELECT u.id, u.name, u.lastName FROM user;", nativeQuery = true)
     List<UserDTO> getUsersList();
 }
