@@ -2,16 +2,21 @@ package com.project.firstAPI.controller;
 
 import com.project.firstAPI.model.Comment;
 import com.project.firstAPI.model.Publish;
+import com.project.firstAPI.model.PublishDTO;
 import com.project.firstAPI.repository.CommentRepository;
 import com.project.firstAPI.repository.PublishRepository;
+import com.project.firstAPI.service.CommentService;
+import com.project.firstAPI.service.PublishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RequestMapping("/publish")
 @RestController
@@ -23,6 +28,8 @@ public class PublishController {
     PublishRepository publishRepository;
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    PublishService publishService;
 
     //Add publish
     @PostMapping("")
@@ -59,5 +66,10 @@ public class PublishController {
     @Scheduled(fixedRate = 1000)
     private void deleteComment() {
         commentRepository.deleteComment();
+    }
+
+    @GetMapping("/async")
+    public ResponseEntity<?> getAsync() {
+        return ResponseEntity.status(HttpStatus.OK).body(publishService.getPublish());
     }
 }

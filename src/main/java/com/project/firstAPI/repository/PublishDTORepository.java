@@ -14,5 +14,5 @@ public interface PublishDTORepository extends JpaRepository<PublishDTO, Integer>
     @Modifying
     @Transactional
     @Query(value = "SELECT publish.title, publish.description, publish.likes FROM publish;", nativeQuery = true)
-    List<PublishDTO> publishList();
+    List<PublishDTO> getPublishList();
 }

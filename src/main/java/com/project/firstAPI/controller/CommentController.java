@@ -1,7 +1,9 @@
 package com.project.firstAPI.controller;
 
 import com.project.firstAPI.model.Comment;
+import com.project.firstAPI.model.CommentByPublish;
 import com.project.firstAPI.repository.CommentRepository;
+import com.project.firstAPI.repository.CountCommentByPublishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ public class CommentController {
 
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    CountCommentByPublishRepository commentByPublishRepository;
 
     //Add comment
     @PostMapping("")
@@ -47,6 +51,12 @@ public class CommentController {
     public void deleteCommentById(@PathVariable final Integer id) {
         commentRepository.findById(id)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, String.format(COMMENT_NOT_FOUND, id)));
+    }
+
+    //Get count of comments by publish
+    @GetMapping(value = "")
+    public List<CommentByPublish> getCommentByPublishList() {
+        return commentByPublishRepository.getCount();
     }
 
 }
