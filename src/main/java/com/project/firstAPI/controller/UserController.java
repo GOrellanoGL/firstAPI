@@ -2,7 +2,6 @@ package com.project.firstAPI.controller;
 
 import com.project.firstAPI.model.Publish;
 import com.project.firstAPI.model.User;
-import com.project.firstAPI.model.UserDTO;
 import com.project.firstAPI.repository.PublishRepository;
 import com.project.firstAPI.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
-import java.util.stream.Collectors;
-//import org.modelmapper.ModelMapper;
+
 import static java.util.Objects.isNull;
 
 @RequestMapping("/user")
@@ -25,7 +23,6 @@ public class UserController {
     UserRepository userRepository;
     @Autowired
     PublishRepository publishRepository;
-    //ModelMapper modelMapper = new ModelMapper();
 
     //Add User
     @PostMapping("")
@@ -54,6 +51,7 @@ public class UserController {
     }
 
 /*    private UserDTO convertToDto(User user) {
+        final ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(user, UserDTO.class);
     }*/
 
