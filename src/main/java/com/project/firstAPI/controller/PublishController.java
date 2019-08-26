@@ -2,10 +2,8 @@ package com.project.firstAPI.controller;
 
 import com.project.firstAPI.model.Comment;
 import com.project.firstAPI.model.Publish;
-import com.project.firstAPI.model.PublishDTO;
 import com.project.firstAPI.repository.CommentRepository;
 import com.project.firstAPI.repository.PublishRepository;
-import com.project.firstAPI.service.CommentService;
 import com.project.firstAPI.service.PublishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @RequestMapping("/publish")
 @RestController
