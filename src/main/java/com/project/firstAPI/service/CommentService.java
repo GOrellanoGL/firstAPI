@@ -13,7 +13,7 @@ public class CommentService {
     @Autowired
     CommentDTORepository commentDTORepository;
 
-    public CompletableFuture<List<CommentDTO>> methodOne() {
+    public CompletableFuture<List<CommentDTO>> getComments() {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
