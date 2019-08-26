@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,8 +30,13 @@ public class UserController {
 
     //Add User
     @PostMapping("")
-    public void addUser(@RequestBody final User user) {
+    public void addUser(@RequestBody final User user, HttpServletRequest request) {
+        user.setBrowser(this.getUserAgent(request));
         userRepository.save(user);
+    }
+
+    private String getUserAgent(HttpServletRequest request) {
+        return request.getHeader("user-agent");
     }
 
     //Add publish to user
