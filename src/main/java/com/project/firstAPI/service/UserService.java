@@ -1,6 +1,6 @@
 package com.project.firstAPI.service;
 
-import com.project.firstAPI.model.UserDTO;
+import com.project.firstAPI.dto.UserDTO;
 import com.project.firstAPI.repository.UserDTORepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;

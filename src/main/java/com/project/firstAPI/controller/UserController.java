@@ -2,7 +2,7 @@ package com.project.firstAPI.controller;
 
 import com.project.firstAPI.model.Publish;
 import com.project.firstAPI.model.User;
-import com.project.firstAPI.model.UserDTO;
+import com.project.firstAPI.dto.UserDTO;
 import com.project.firstAPI.repository.PublishRepository;
 import com.project.firstAPI.repository.UserRepository;
 import org.modelmapper.ModelMapper;

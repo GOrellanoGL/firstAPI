@@ -1,6 +1,6 @@
 package com.project.firstAPI.repository;
 
-import com.project.firstAPI.model.UserDTO;
+import com.project.firstAPI.dto.UserDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

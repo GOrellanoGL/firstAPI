@@ -1,6 +1,6 @@
 package com.project.firstAPI.service;
 
-import com.project.firstAPI.model.CommentDTO;
+import com.project.firstAPI.dto.CommentDTO;
 import com.project.firstAPI.repository.CommentDTORepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

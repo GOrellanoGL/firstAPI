@@ -1,6 +1,6 @@
 package com.project.firstAPI.repository;
 
-import com.project.firstAPI.model.CommentDTO;
+import com.project.firstAPI.dto.CommentDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

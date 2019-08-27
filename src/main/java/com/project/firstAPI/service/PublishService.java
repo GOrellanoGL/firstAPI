@@ -1,6 +1,6 @@
 package com.project.firstAPI.service;
 
-import com.project.firstAPI.model.PublishDTO;
+import com.project.firstAPI.dto.PublishDTO;
 import com.project.firstAPI.repository.PublishDTORepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
