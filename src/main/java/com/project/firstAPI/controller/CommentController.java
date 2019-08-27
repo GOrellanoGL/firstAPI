@@ -5,6 +5,8 @@ import com.project.firstAPI.model.CommentByPublish;
 import com.project.firstAPI.repository.CommentRepository;
 import com.project.firstAPI.repository.CountCommentByPublishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -56,6 +58,13 @@ public class CommentController {
     @GetMapping(value = "/countCommentByPublish")
     public List<CommentByPublish> getCommentByPublishList() {
         return commentByPublishRepository.getCount();
+    }
+
+    //Get count of comments by publish with pagination
+    @GetMapping(value = "/countCommentByPublish/pagination")
+    public Page<CommentByPublish> listCommentByPublishPageByPage(@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
+                                                                 @RequestParam(value = "size", defaultValue = "30", required = false) Integer size) {
+        return commentByPublishRepository.getCountWithPagination(PageRequest.of(page - 1, size));
     }
 
 }

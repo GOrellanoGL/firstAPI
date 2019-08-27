@@ -22,4 +22,5 @@ public class CommentService {
 
         return CompletableFuture.completedFuture(commentDTORepository.getComment());
     }
+
 }
