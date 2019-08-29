@@ -5,6 +5,8 @@ import com.project.firstAPI.model.Publish;
 import com.project.firstAPI.repository.CommentRepository;
 import com.project.firstAPI.repository.PublishRepository;
 import com.project.firstAPI.service.PublishService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import java.util.List;
 @RequestMapping("/publish")
 @RestController
 @EnableScheduling
+@Api(value = "Publish management system", description = "Operations pertaining to publish management system")
 public class PublishController {
     private static final String PUBLISH_NOT_FOUND = "Publish ID not found: %s";
 
@@ -29,12 +32,14 @@ public class PublishController {
     PublishService publishService;
 
     //Add publish
+    @ApiOperation(value = "Add publish")
     @PostMapping("")
     public void addPublish(@RequestBody final Publish p) {
         publishRepository.save(p);
     }
 
     //Add a comment to the publish
+    @ApiOperation(value = "Add comment to a publish id by user id")
     @PostMapping("/{userId}/{publishId}")
     public void addCommentToPublish(@PathVariable final Integer userId, @PathVariable final Integer publishId) {
         Comment c = commentRepository.findById(publishId)
@@ -47,12 +52,14 @@ public class PublishController {
     }
 
     //Get all publish
+    @ApiOperation(value = "Get all publish")
     @GetMapping("")
     public List<Publish> getAllPublish() {
         return publishRepository.findAll();
     }
 
     //Get specific publish
+    @ApiOperation(value = "Get a specific publish by id")
     @GetMapping("/{id}")
     public Publish getById(@PathVariable final Integer id) {
         return publishRepository.findById(id)
@@ -65,6 +72,7 @@ public class PublishController {
         commentRepository.deleteComment();
     }
 
+    @ApiOperation(value = "Get async publish")
     @GetMapping("/async")
     public ResponseEntity<?> getAsync() {
         return ResponseEntity.status(HttpStatus.OK).body(publishService.getPublish());

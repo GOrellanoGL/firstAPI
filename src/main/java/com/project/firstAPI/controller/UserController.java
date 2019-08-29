@@ -1,10 +1,12 @@
 package com.project.firstAPI.controller;
 
+import com.project.firstAPI.dto.UserDTO;
 import com.project.firstAPI.model.Publish;
 import com.project.firstAPI.model.User;
-import com.project.firstAPI.dto.UserDTO;
 import com.project.firstAPI.repository.PublishRepository;
 import com.project.firstAPI.repository.UserRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import static java.util.Objects.isNull;
 
 @RequestMapping("/user")
 @RestController
+@Api(value = "User management system", description = "Operations pertaining to user management system")
 public class UserController {
     private static final String PERSON_NOT_FOUND = "User ID not found: %s";
 
@@ -29,6 +32,7 @@ public class UserController {
     PublishRepository publishRepository;
 
     //Add User
+    @ApiOperation(value = "Add User")
     @PostMapping("")
     public void addUser(@RequestBody final User user, HttpServletRequest request) {
         user.setBrowser(this.getUserAgent(request));
@@ -40,6 +44,7 @@ public class UserController {
     }
 
     //Add publish to user
+    @ApiOperation(value = "Add publish to specific user")
     @PostMapping("/{userId}/{publishId}")
     public void addPublish(@PathVariable final Integer userId, @PathVariable final Integer publishId) {
         Publish p = publishRepository.findById(publishId)
@@ -53,6 +58,7 @@ public class UserController {
     }
 
     //Get all users
+    @ApiOperation(value = "Get all users")
     @GetMapping("")
     public List<UserDTO> getAllUser() {
         List<User> users = userRepository.findAll();
@@ -65,6 +71,7 @@ public class UserController {
     }
 
     //Get specific user
+    @ApiOperation(value = "Get a specific user by id")
     @GetMapping("/{id}")
     public User getUserById(@PathVariable("id") Integer id) {
         return userRepository.findById(id)
@@ -72,6 +79,7 @@ public class UserController {
     }
 
     //Update user
+    @ApiOperation(value = "Update data for specific user by id")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable("id") Integer id, @RequestBody User user) {
         User u = userRepository.findById(id)
@@ -87,6 +95,7 @@ public class UserController {
     }
 
     //Delete specific user
+    @ApiOperation(value = "Delete a specific user by id")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUserById(@PathVariable("id") Integer id) {
         User u = userRepository.findById(id)
@@ -99,6 +108,7 @@ public class UserController {
     }
 
     //Delete all users
+    @ApiOperation(value = "Delete all users")
     @DeleteMapping(value = "")
     public void deleteAllUser() {
         userRepository.deleteAll();

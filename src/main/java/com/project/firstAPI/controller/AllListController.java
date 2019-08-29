@@ -4,6 +4,8 @@ import com.project.firstAPI.model.Comment;
 import com.project.firstAPI.model.Publish;
 import com.project.firstAPI.model.User;
 import com.project.firstAPI.service.ListService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,12 @@ import java.util.concurrent.CompletableFuture;
 @RequestMapping("/lists")
 @RestController
 @EnableScheduling
+@Api(value = "All list (User, Publish and Comments) management system", description = "Operations pertaining to all list management system")
 public class AllListController {
     @Autowired
     ListService listService;
 
+    @ApiOperation(value = "Get all list wit user, publish and comment")
     @GetMapping("/allContent")
     public ResponseEntity<?> getAsync() {
         CompletableFuture<List<User>> userList = listService.getAllUsers();
