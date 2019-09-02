@@ -20,6 +20,12 @@ import static org.mockito.Mockito.*;
 
 public class UserControllerTest {
 
+    private final static User USER = new User(1, "Gonzalo", "Orellano", "Chrome", null);
+    private final static List<User> USER_LIST = Arrays.asList(
+            new User(1, "Gonzalo", "Orellano", "Chrome", null),
+            new User(2, "Simon", "Orellano", "Firefox", null)
+    );
+    private final static Integer ID = 1;
     @Mock
     private UserRepository userRepository;
     @Mock
@@ -37,11 +43,7 @@ public class UserControllerTest {
     @Test
     public void getAllUsers() throws Exception {
         //GIVEN
-        List<User> users = Arrays.asList(
-                new User(1, "Gonzalo", "Orellano", "Chrome", null),
-                new User(2, "Simon", "Orellano", "Firefox", null)
-        );
-        when(userRepository.findAll()).thenReturn(users);
+        when(userRepository.findAll()).thenReturn(USER_LIST);
         //WHEN
         userController.getAllUser();
         //THEN
@@ -51,22 +53,18 @@ public class UserControllerTest {
     @Test
     public void getUserById() throws Exception {
         //GIVEN
-        Integer id = 1;
-        User user = new User(1, "Gonzalo", "Orellano", "Chrome", null);
-        when(userRepository.findById(id)).thenReturn(java.util.Optional.of(user));
+        when(userRepository.findById(ID)).thenReturn(java.util.Optional.of(USER));
         //WHEN
-        userController.getUserById(id);
+        userController.getUserById(ID);
         //THEN
-        verify(userRepository, times(1)).findById(id);
+        verify(userRepository, times(1)).findById(ID);
     }
 
     @Test
     public void deleteUserById() throws Exception {
-        Integer id = 1;
-        User user = new User(1, "Gonzalo", "Orellano", "Chrome", null);
-        when(userRepository.findById(id)).thenReturn(java.util.Optional.of(user));
-        userController.deleteUserById(id);
-        verify(userRepository, times(1)).deleteById(id);
+        when(userRepository.findById(ID)).thenReturn(java.util.Optional.of(USER));
+        userController.deleteUserById(ID);
+        verify(userRepository, times(1)).deleteById(ID);
     }
 
     @Test
@@ -77,13 +75,12 @@ public class UserControllerTest {
 
     @Test
     public void addUser() throws Exception {
-        User user = new User(1, "Gonzalo", "Orellano", "", null);
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.addHeader("user-agent", "Google Chrome");
-        user.setBrowser(this.getUserAgent(request));
-        when(userRepository.save(user)).thenReturn(user);
-        userController.addUser(user, request);
-        verify(userRepository, times(1)).save(user);
+        USER.setBrowser(this.getUserAgent(request));
+        when(userRepository.save(USER)).thenReturn(USER);
+        userController.addUser(USER, request);
+        verify(userRepository, times(1)).save(USER);
     }
 
     private String getUserAgent(HttpServletRequest request) {
@@ -106,10 +103,9 @@ public class UserControllerTest {
 
     @Test
     public void updateUser() throws Exception {
-        User user = new User(1, "Gonzalo", "Orellano", "Chrome", null);
-        when(userRepository.findById(1)).thenReturn(java.util.Optional.of(user));
-        userController.updateUser(1, user);
-        verify(userRepository, times(1)).save(user);
+        when(userRepository.findById(ID)).thenReturn(java.util.Optional.of(USER));
+        userController.updateUser(ID, USER);
+        verify(userRepository, times(1)).save(USER);
     }
 
 }

@@ -23,6 +23,13 @@ import static org.mockito.Mockito.*;
 
 public class PublishControllerTest {
 
+    private final static User USER = new User(1, "Gonzalo", "Orellano", "", null);
+    private final static Publish PUBLISH = new Publish(1, "Titulo 1", "Descripcion 1", LocalDateTime.now(), "", 10, USER, null);
+    private final static List<Publish> PUBLISH_LIST = Arrays.asList(
+            new Publish(1, "Titulo 1", "Descripcion 1", LocalDateTime.now(), "", 10, USER, null),
+            new Publish(2, "Titulo 2", "Descripcion 2", LocalDateTime.now(), "", 10, null, null)
+    );
+    private final static Integer ID = 1;
     @InjectMocks
     PublishController publishController;
     @Mock
@@ -41,11 +48,9 @@ public class PublishControllerTest {
 
     @Test
     public void addPublish() throws Exception {
-        User user = new User(1, "Gonzalo", "Orellano", "", null);
-        Publish publish = new Publish(1, "Titulo 1", "Descripcion 1", LocalDateTime.now(), "", 10, user, null);
-        when(publishRepository.save(publish)).thenReturn(publish);
-        publishController.addPublish(publish);
-        verify(publishRepository, times(1)).save(publish);
+        when(publishRepository.save(PUBLISH)).thenReturn(PUBLISH);
+        publishController.addPublish(PUBLISH);
+        verify(publishRepository, times(1)).save(PUBLISH);
     }
 
     @Test
@@ -69,24 +74,16 @@ public class PublishControllerTest {
 
     @Test
     public void getAllPublish() throws Exception {
-        User user = new User(1, "Gonzalo", "Orellano", "", null);
-        List<Publish> publish = Arrays.asList(
-             new Publish(1, "Titulo 1", "Descripcion 1", LocalDateTime.now(), "", 10, user, null),
-             new Publish(2, "Titulo 2", "Descripcion 2", LocalDateTime.now(), "", 10, null, null)
-        );
-        when(publishRepository.findAll()).thenReturn(publish);
+        when(publishRepository.findAll()).thenReturn(PUBLISH_LIST);
         publishController.getAllPublish();
         verify(publishRepository, times(1)).findAll();
     }
 
     @Test
     public void getById() {
-        Integer id = 1;
-        User user = new User(1, "Gonzalo", "Orellano", "", null);
-        Publish publish = new Publish(1, "Titulo 1", "Descripcion 1", LocalDateTime.now(), "", 10, user, null);
-        when(publishRepository.findById(id)).thenReturn(java.util.Optional.of(publish));
-        publishController.getById(id);
-        verify(publishRepository, times(1)).findById(id);
+        when(publishRepository.findById(ID)).thenReturn(java.util.Optional.of(PUBLISH));
+        publishController.getById(ID);
+        verify(publishRepository, times(1)).findById(ID);
     }
 
     @Test

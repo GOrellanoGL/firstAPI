@@ -22,6 +22,18 @@ import static org.mockito.Mockito.*;
 
 public class CommentControllerTest {
 
+    private final static List<Comment> COMMENT_LIST = Arrays.asList(
+            new Comment(1, "descripcion 1", "30-08-2019", "Gonzalo Orellano", null),
+            new Comment(2, "descripcion 2", "30-08-2019", "Simon Orellano", null)
+    );
+    private final static List<CommentByPublish> COMMENT_BY_PUBLISH_LIST = Arrays.asList(
+            new CommentByPublish(1, "Titulo", "Gonzalo Orellano", 10),
+            new CommentByPublish(2, "Titulo 1", "Simon Orellano", 20)
+    );
+    private final static Comment COMMENT = new Comment(1, "Comentario de prueba", "30-08-2019", "Gonzalo Orellano", null);
+    private final static Integer ID = 1;
+    private final static Integer PAGE = 1;
+    private final static Integer SIZE = 10;
     @Mock
     private CommentRepository commentRepository;
     @Mock
@@ -38,30 +50,23 @@ public class CommentControllerTest {
 
     @Test
     public void addCommentTest() throws Exception {
-        Comment comment = new Comment(1, "Comentario de prueba", "30-08-2019", "Gonzalo Orellano", null);
-        when(commentRepository.save(comment)).thenReturn(comment);
-        commentController.addComment(comment);
-        verify(commentRepository, times(1)).save(comment);
+        when(commentRepository.save(COMMENT)).thenReturn(COMMENT);
+        commentController.addComment(COMMENT);
+        verify(commentRepository, times(1)).save(COMMENT);
     }
 
     @Test
     public void getAllComment() throws Exception {
-        List<Comment> commentList = Arrays.asList(
-                new Comment(1, "descripcion 1", "30-08-2019", "Gonzalo Orellano", null),
-                new Comment(2, "descripcion 2", "30-08-2019", "Simon Orellano", null)
-        );
-        when(commentRepository.findAll()).thenReturn(commentList);
+        when(commentRepository.findAll()).thenReturn(COMMENT_LIST);
         commentController.getAllComment();
         verify(commentRepository, times(1)).findAll();
     }
 
     @Test
     public void getCommentById() throws Exception {
-        Integer id = 1;
-        Comment comment = new Comment(1, "descripcion 1", "30-08-2019", "Gonzalo Orellano", null);
-        when(commentRepository.findById(id)).thenReturn(java.util.Optional.of(comment));
-        commentController.deleteCommentById(1);
-        verify(commentRepository, times(1)).findById(id);
+        when(commentRepository.findById(ID)).thenReturn(java.util.Optional.of(COMMENT));
+        commentController.deleteCommentById(ID);
+        verify(commentRepository, times(1)).findById(ID);
     }
 
     @Test
@@ -72,36 +77,28 @@ public class CommentControllerTest {
 
     @Test
     public void deleteCommentById() throws Exception {
-        Integer id = 1;
-        Comment comment = new Comment(1, "descripcion 1", "30-08-2019", "Gonzalo Orellano", null);
-        when(commentRepository.findById(id)).thenReturn(java.util.Optional.of(comment));
-        commentController.deleteCommentById(id);
-        verify(commentRepository, times(1)).deleteById(id);
+        when(commentRepository.findById(ID)).thenReturn(java.util.Optional.of(COMMENT));
+        commentController.deleteCommentById(ID);
+        verify(commentRepository, times(1)).deleteById(ID);
     }
 
     @Test
     public void getCommentByPublishList() throws Exception {
-        List<CommentByPublish> commentByPublishList = Arrays.asList(
-                new CommentByPublish(1, "Titulo", "Gonzalo Orellano", 10),
-                new CommentByPublish(2, "Titulo 1", "Simon Orellano", 20)
-        );
-        when(commentByPublishRepository.getCount()).thenReturn(commentByPublishList);
+        when(commentByPublishRepository.getCount()).thenReturn(COMMENT_BY_PUBLISH_LIST);
         commentController.getCommentByPublishList();
         verify(commentByPublishRepository, times(1)).getCount();
     }
 
     @Test
     public void listCommentByPublishPageByPage() throws Exception {
-        Integer page = 1;
-        Integer size = 10;
         List<CommentByPublish> commentByPublishList = Arrays.asList(
                 new CommentByPublish(1, "Titulo", "Gonzalo Orellano", 10),
                 new CommentByPublish(2, "Titulo 1", "Simon Orellano", 20)
         );
-        PageRequest pageRequest = PageRequest.of(page - 1, size);
+        PageRequest pageRequest = PageRequest.of(PAGE - 1, SIZE);
         Page<CommentByPublish> pageComment = new PageImpl<CommentByPublish>(commentByPublishList);
         when(commentByPublishRepository.getCountWithPagination(pageRequest)).thenReturn(pageComment);
-        commentController.listCommentByPublishPageByPage(page, size);
+        commentController.listCommentByPublishPageByPage(PAGE, SIZE);
         verify(commentByPublishRepository, times(1)).getCountWithPagination(pageRequest);
     }
 }
