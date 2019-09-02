@@ -1,3 +1,8 @@
+/**
+ * @since 1.0
+ * @author Gonzalo Orellano
+ * @version 1.0
+ */
 package com.project.firstAPI.config;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -11,21 +16,25 @@ import java.util.concurrent.Executor;
 @Configuration
 @EnableAsync
 public class AsyncConfiguration {
+    /**CORE_POOL_SIZE.*/
     @Value("${executor.corePoolSize: 100}")
-    private Integer CORE_POOL_SIZE;
-
+    private Integer corePoolSize;
+    /**MAX_POOL_SIZE.**/
     @Value("${executor.maxPoolSize: 100}")
-    private Integer MAX_POOL_SIZE;
-
+    private static Integer maxPoolSize;
+    /**QUEUE_CAPACITY.**/
     @Value("${executor.queueCapacity: 100}")
-    private Integer QUEUE_CAPACITY;
+    private static Integer queueCapacity;
 
+    /** Thread Pool Task Executor.
+     * @return Async Executor.
+     */
     @Bean("threadPoolTaskExecutor")
     public Executor asyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(CORE_POOL_SIZE);
-        executor.setMaxPoolSize(MAX_POOL_SIZE);
-        executor.setQueueCapacity(QUEUE_CAPACITY);
+        executor.setCorePoolSize(corePoolSize);
+        executor.setMaxPoolSize(maxPoolSize);
+        executor.setQueueCapacity(queueCapacity);
         executor.initialize();
 
         return executor;

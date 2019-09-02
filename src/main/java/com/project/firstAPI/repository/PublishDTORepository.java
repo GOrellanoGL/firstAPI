@@ -10,9 +10,13 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface PublishDTORepository extends JpaRepository<PublishDTO, Integer> {
+public interface PublishDTORepository extends JpaRepository<
+        PublishDTO, Integer> {
+    /**Get publish list.
+     * @return publish list.**/
     @Modifying
     @Transactional
-    @Query(value = "SELECT publish.title, publish.description, publish.likes FROM publish;", nativeQuery = true)
+    @Query(value = "SELECT publish.title, publish.description, "
+            + "publish.likes FROM publish;", nativeQuery = true)
     List<PublishDTO> getPublishList();
 }

@@ -10,8 +10,10 @@ import javax.transaction.Transactional;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
+    /**Delete comment.**/
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM comment WHERE (timeStampDiff(day, date_Comment, now())) > 5;", nativeQuery = true)
+    @Query(value = "DELETE FROM comment WHERE (timeStampDiff"
+            + "(day, date_Comment, now())) > 5;", nativeQuery = true)
     void deleteComment();
 }

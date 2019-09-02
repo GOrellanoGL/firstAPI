@@ -4,10 +4,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FirstApiApplication {
+final class FirstApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FirstApiApplication.class, args);
-	}
+    private FirstApiApplication() {
+        //
+    }
+
+    /** Main.
+     * @param args args.
+     */
+    public static void main(final String[] args) {
+        SpringApplication.run(FirstApiApplication.class, args);
+    }
 
 }

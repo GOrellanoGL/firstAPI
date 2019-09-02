@@ -15,27 +15,43 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ListService {
+
+    /**Sleep thread.**/
+    private final Integer sleepThread = 2000;
+    /**UserRepository.**/
     @Autowired
+    private
     UserRepository userRepository;
-
+    /**PublishRepository.**/
     @Autowired
+    private
     PublishRepository publishRepository;
-
+    /**CommentRepository.**/
     @Autowired
+    private
     CommentRepository commentRepository;
 
+    /** Gets all users.
+     * @return A completable future for all users.
+     */
     @Async("threadPoolTaskExecutor")
     public CompletableFuture<List<User>> getAllUsers() {
         sleepThread();
         return CompletableFuture.completedFuture(userRepository.findAll());
     }
 
+    /** Gets all publish.
+     * @return A completable future for all publish.
+     */
     @Async("threadPoolTaskExecutor")
     public CompletableFuture<List<Publish>> getAllPublish() {
         sleepThread();
         return CompletableFuture.completedFuture(publishRepository.findAll());
     }
 
+    /** Gets all comments.
+     * @return A completable future for all comments.
+     */
     @Async("threadPoolTaskExecutor")
     public CompletableFuture<List<Comment>> getAllComments() {
         sleepThread();
@@ -44,7 +60,7 @@ public class ListService {
 
     private void sleepThread() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(sleepThread);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

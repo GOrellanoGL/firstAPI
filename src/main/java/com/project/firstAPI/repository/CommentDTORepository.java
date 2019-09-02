@@ -10,9 +10,14 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface CommentDTORepository extends JpaRepository<CommentDTO, Integer> {
+public interface CommentDTORepository extends JpaRepository<
+        CommentDTO, Integer> {
+    /** Gets Comment.
+     * @return A list with commentDTO.
+     */
     @Modifying
     @Transactional
-    @Query(value = "SELECT comment.id, comment.description, comment.owner FROM comment;", nativeQuery = true)
+    @Query(value = "SELECT comment.id, comment.description, comment.owner "
+            + "FROM comment;", nativeQuery = true)
     List<CommentDTO> getComment();
 }

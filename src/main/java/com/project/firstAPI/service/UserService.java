@@ -11,17 +11,24 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class UserService {
+    /**Sleep thread.**/
+    private final Integer sleepThread = 2000;
+    /**UserDTO repository.**/
     @Autowired
-    UserDTORepository userDTORepository;
+    private UserDTORepository userDTORepository;
 
+    /** Gets users dto list.
+     * @return completable future of users list.
+     */
     @Async("threadPoolTaskExecutor")
     public CompletableFuture<UserDTO> getUsers() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(sleepThread);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         List<UserDTO> users = userDTORepository.getUsersList();
-        return null;//CompletableFuture.completedFuture(users);
+        //CompletableFuture.completedFuture(users);
+        return null;
     }
 }

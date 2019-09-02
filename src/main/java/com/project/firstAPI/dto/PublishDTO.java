@@ -12,9 +12,13 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Entity
 public class PublishDTO {
+    /**Id.**/
     @Id
     private Integer id;
+    /**Title.**/
     private String title;
+    /**Description.**/
     private String description;
+    /**Likes.**/
     private Integer likes;
 }

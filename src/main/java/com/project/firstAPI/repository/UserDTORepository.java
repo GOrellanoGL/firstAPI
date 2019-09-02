@@ -1,3 +1,8 @@
+/**
+ * @since 1.0
+ * @author Gonzalo Orellano
+ * @version 1.0
+ */
 package com.project.firstAPI.repository;
 
 import com.project.firstAPI.dto.UserDTO;
@@ -11,8 +16,11 @@ import java.util.List;
 
 @Repository
 public interface UserDTORepository extends JpaRepository<UserDTO, Integer> {
+    /**Get users list.
+     * @return users list.**/
     @Modifying
     @Transactional
-    @Query(value = "SELECT u.id, u.name, u.lastName FROM user;", nativeQuery = true)
+    @Query(value = "SELECT u.id, u.name, u.lastName FROM user;",
+            nativeQuery = true)
     List<UserDTO> getUsersList();
 }

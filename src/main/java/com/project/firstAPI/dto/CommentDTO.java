@@ -12,8 +12,11 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Entity
 public class CommentDTO {
+    /**Id.**/
     @Id
     private Integer id;
+    /**Description.**/
     private String description;
+    /**Owner.**/
     private String owner;
 }

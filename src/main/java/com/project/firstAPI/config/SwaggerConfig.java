@@ -1,3 +1,8 @@
+/**
+ * @since 1.0
+ * @author Gonzalo Orellano
+ * @version 1.0
+ */
 package com.project.firstAPI.config;
 
 import org.springframework.context.annotation.Bean;
@@ -14,11 +19,15 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+    /** Swagger config.
+     * @return docket.
+     */
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.project.firstAPI.controller"))
+                .apis(RequestHandlerSelectors.basePackage(
+                        "com.project.firstAPI.controller"))
                 .paths(PathSelectors.regex("/.*"))
                 .build().apiInfo(apiEndPointsInfo());
     }
@@ -26,7 +35,8 @@ public class SwaggerConfig {
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder().title("Spring Boot REST API")
                 .description("First REST API")
-                .contact(new Contact("Gonzalo Orellano", "", "gonzalo.orellano@globallogic.com"))
+                .contact(new Contact("Gonzalo Orellano", "",
+                        "gonzalo.orellano@globallogic.com"))
                 .license("Apache 2.0")
                 .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
                 .version("1.0.0")

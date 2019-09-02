@@ -11,17 +11,24 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class PublishService {
+    /**Sleep thread.**/
+    private static final Integer SLEEP_THREAD = 2000;
+    /**PublishDTO repository.**/
     @Autowired
-    PublishDTORepository publishDTORepository;
+    private PublishDTORepository publishDTORepository;
 
+    /** Gets publish dto list.
+     * @return completable future of publish list.
+     */
     @Async("threadPoolTaskExecutor")
     public CompletableFuture<List<PublishDTO>> getPublish() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(SLEEP_THREAD);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        //no deberia de hacer esta cast -- ver
-        return (CompletableFuture<List<PublishDTO>>) publishDTORepository.getPublishList();
+
+        return (CompletableFuture<List<PublishDTO>>)
+                publishDTORepository.getPublishList();
     }
 }

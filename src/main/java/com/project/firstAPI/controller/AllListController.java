@@ -20,18 +20,27 @@ import java.util.concurrent.CompletableFuture;
 @RequestMapping("/lists")
 @RestController
 @EnableScheduling
-@Api(value = "All list (User, Publish and Comments) management system", description = "Operations pertaining to all list management system")
+@Api(value = "All list (User, Publish and Comments) management system",
+        description = "Operations pertaining to all list management system")
 public class AllListController {
+    /**Service List.**/
     @Autowired
-    ListService listService;
+    private ListService listService;
 
+    /** Get all list wit user, publish and comment.
+     * @return A responseEntity with the three list joined.
+     */
     @ApiOperation(value = "Get all list wit user, publish and comment")
     @GetMapping("/allContent")
     public ResponseEntity<?> getAsync() {
-        CompletableFuture<List<User>> userList = listService.getAllUsers();
-        CompletableFuture<List<Publish>> publishList = listService.getAllPublish();
-        CompletableFuture<List<Comment>> commentList = listService.getAllComments();
+        CompletableFuture<List<User>> userList =
+                listService.getAllUsers();
+        CompletableFuture<List<Publish>> publishList =
+                listService.getAllPublish();
+        CompletableFuture<List<Comment>> commentList =
+                listService.getAllComments();
 
-        return ResponseEntity.status(HttpStatus.OK).body(userList.join() + " " + publishList.join() + " " + commentList.join());
+        return ResponseEntity.status(HttpStatus.OK).body(userList.join() + " "
+                + publishList.join() + " " + commentList.join());
     }
 }

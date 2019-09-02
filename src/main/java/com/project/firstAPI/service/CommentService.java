@@ -1,3 +1,8 @@
+/**
+ * @since 1.0
+ * @author Gonzalo Orellano
+ * @version 1.0
+ */
 package com.project.firstAPI.service;
 
 import com.project.firstAPI.dto.CommentDTO;
@@ -10,17 +15,23 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class CommentService {
+    /**Sleep.**/
+    private final Integer sleepThread = 2000;
+    /**CommentDTORepository.**/
     @Autowired
-    CommentDTORepository commentDTORepository;
-
+    private CommentDTORepository commentDTORepository;
+    /** Gets comments.
+     * @return completable future with list.
+     */
     public CompletableFuture<List<CommentDTO>> getComments() {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(sleepThread);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        return CompletableFuture.completedFuture(commentDTORepository.getComment());
+        return CompletableFuture.completedFuture(
+                commentDTORepository.getComment());
     }
 
 }

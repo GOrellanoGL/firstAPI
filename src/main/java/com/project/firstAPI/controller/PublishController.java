@@ -12,7 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
@@ -20,30 +25,43 @@ import java.util.List;
 @RequestMapping("/publish")
 @RestController
 @EnableScheduling
-@Api(value = "Publish management system", description = "Operations pertaining to publish management system")
+@Api(value = "Publish management system", description =
+        "Operations pertaining to publish management system")
 public class PublishController {
+    /**Fixed rate.**/
+    private static final Integer FIXED_RATE = 1000;
+    /**Publish not found.**/
     private static final String PUBLISH_NOT_FOUND = "Publish ID not found: %s";
+    /**Publish repository.**/
+    @Autowired
+    private PublishRepository publishRepository;
+    /**Comment repository.**/
+    @Autowired
+    private CommentRepository commentRepository;
+    /**Publish service.**/
+    @Autowired
+    private PublishService publishService;
 
-    @Autowired
-    PublishRepository publishRepository;
-    @Autowired
-    CommentRepository commentRepository;
-    @Autowired
-    PublishService publishService;
-
-    //Add publish
+    /** Sets the employee’s last name.
+     * @param p Publish.
+     */
     @ApiOperation(value = "Add publish")
     @PostMapping("")
     public void addPublish(@RequestBody final Publish p) {
         publishRepository.save(p);
     }
 
-    //Add a comment to the publish
+    /** Sets the employee’s last name.
+     * @param userId userId.
+     * @param publishId publishId.
+     */
     @ApiOperation(value = "Add comment to a publish id by user id")
     @PostMapping("/{userId}/{publishId}")
-    public void addCommentToPublish(@PathVariable final Integer userId, @PathVariable final Integer publishId) {
+    public void addCommentToPublish(@PathVariable final Integer userId,
+                                    @PathVariable final Integer publishId) {
         Comment c = commentRepository.findById(publishId)
-                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST));
+                .orElseThrow(() ->
+                        new HttpClientErrorException(HttpStatus.BAD_REQUEST));
         Publish p = getById(publishId);
         c.setPublish(p);
         p.getComments().add(c);
@@ -51,30 +69,42 @@ public class PublishController {
         publishRepository.save(p);
     }
 
-    //Get all publish
+    /** Gets all publish.
+     * @return A list of publish.
+     */
     @ApiOperation(value = "Get all publish")
     @GetMapping("")
     public List<Publish> getAllPublish() {
         return publishRepository.findAll();
     }
 
-    //Get specific publish
+    /** Gets a specific publish by id.
+     * @return A specific publish by id.
+     * @param id publish id.
+     */
     @ApiOperation(value = "Get a specific publish by id")
     @GetMapping("/{id}")
     public Publish getById(@PathVariable final Integer id) {
         return publishRepository.findById(id)
-                .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, String.format(PUBLISH_NOT_FOUND, id)));
+                .orElseThrow(() -> new HttpClientErrorException(
+                        HttpStatus.BAD_REQUEST,
+                        String.format(PUBLISH_NOT_FOUND, id)));
     }
 
-    //Scheduler
-    @Scheduled(fixedRate = 1000)
+    /** Delete comment wiht scheduler.
+     */
+    @Scheduled(fixedRate = FIXED_RATE)
     private void deleteComment() {
         commentRepository.deleteComment();
     }
 
+    /** Gets publish async.
+     * @return A response entity for publish.
+     */
     @ApiOperation(value = "Get async publish")
     @GetMapping("/async")
     public ResponseEntity<?> getAsync() {
-        return ResponseEntity.status(HttpStatus.OK).body(publishService.getPublish());
+        return ResponseEntity.status(HttpStatus.OK).body(
+                publishService.getPublish());
     }
 }
