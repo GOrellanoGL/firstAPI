@@ -10,10 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
+
+import static java.util.Objects.isNull;
 
 @RequestMapping("/comment")
 @RestController
@@ -57,9 +60,14 @@ public class CommentController {
 
     //Delete specific comment
     @ApiOperation(value = "Delete specific comment by id")
-    public void deleteCommentById(@PathVariable final Integer id) {
-        commentRepository.findById(id)
+    public ResponseEntity<?> deleteCommentById(@PathVariable final Integer id) {
+        Comment c = commentRepository.findById(id)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, String.format(COMMENT_NOT_FOUND, id)));
+        if (isNull(c)) {
+            return new ResponseEntity<>("Unable to delete. Comment with id " + id + " not found.", HttpStatus.NOT_FOUND);
+        }
+        commentRepository.deleteById(id);
+        return new ResponseEntity<Comment>(HttpStatus.ACCEPTED);
     }
 
     //Get count of comments by publish

@@ -101,7 +101,7 @@ public class UserController {
         User u = userRepository.findById(id)
                 .orElseThrow(() -> new HttpClientErrorException(HttpStatus.BAD_REQUEST, String.format(PERSON_NOT_FOUND, id)));
         if (isNull(u)) {
-            return new ResponseEntity<>("Unable to update. User with id " + id + " not found.", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Unable to delete. User with id " + id + " not found.", HttpStatus.NOT_FOUND);
         }
         userRepository.deleteById(id);
         return new ResponseEntity<User>(HttpStatus.ACCEPTED);
