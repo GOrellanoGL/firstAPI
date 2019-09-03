@@ -29,7 +29,7 @@ public class PublishService {
             e.printStackTrace();
         }
 
-        return (CompletableFuture<List<PublishDTO>>)
-                publishDTORepository.getPublishList();
+        return CompletableFuture.completedFuture(
+                publishDTORepository.getPublishList());
     }
 }

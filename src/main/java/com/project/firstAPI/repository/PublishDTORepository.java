@@ -17,7 +17,7 @@ public interface PublishDTORepository extends JpaRepository<
      * @return publish list.**/
     @Modifying
     @Transactional
-    @Query(value = "SELECT publish.title, publish.description, "
+    @Query(value = "SELECT publish.id, publish.title, publish.description, "
             + "publish.likes FROM publish;", nativeQuery = true)
     List<PublishDTO> getPublishList();
 }

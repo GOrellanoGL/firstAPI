@@ -30,7 +30,7 @@ import java.util.List;
         "Operations pertaining to publish management system")
 public class PublishController {
     /**Fixed rate.**/
-    private static final Integer FIXED_RATE = 1000;
+    private static final int FIXED_RATE = 1000;
     /**Publish not found.**/
     private static final String PUBLISH_NOT_FOUND = "Publish ID not found: %s";
     /**Publish repository.**/

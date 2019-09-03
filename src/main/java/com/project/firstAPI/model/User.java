@@ -32,5 +32,5 @@ public class User {
     /**Publish.**/
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, mappedBy = "user")
-    private List<Publish> publishs;
+    private List<Publish> publishes;
 }

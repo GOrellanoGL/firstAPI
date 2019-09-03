@@ -53,7 +53,7 @@ public class Publish {
     /**PrePersist.**/
     @PrePersist
     public final void setTime() {
-        if (isNull(getDatePublish())) {
+        if (isNull(this.datePublish)) {
             this.datePublish = LocalDateTime.now();
         }
     }

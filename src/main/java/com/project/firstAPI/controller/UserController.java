@@ -84,7 +84,7 @@ public class UserController {
                         HttpStatus.BAD_REQUEST,
                         String.format(PERSON_NOT_FOUND, userId)));
         publish.setUser(user);
-        user.getPublishs().add(publish);
+        user.getPublishes().add(publish);
         publishRepository.save(publish);
         userRepository.save(user);
     }
