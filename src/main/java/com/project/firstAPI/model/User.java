@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
 import java.util.List;
 
+/**User.**/
 @Entity
 @Data
 @NoArgsConstructor

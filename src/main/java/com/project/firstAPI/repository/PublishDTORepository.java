@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**Publish DTO repository.**/
 @Repository
 public interface PublishDTORepository extends JpaRepository<
         PublishDTO, Integer> {

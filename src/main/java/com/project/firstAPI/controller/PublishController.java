@@ -60,8 +60,8 @@ public class PublishController {
     public void addCommentToPublish(@PathVariable final Integer userId,
                                     @PathVariable final Integer publishId) {
         Comment c = commentRepository.findById(publishId)
-                .orElseThrow(() ->
-                        new HttpClientErrorException(HttpStatus.BAD_REQUEST));
+                .orElseThrow(() -> new HttpClientErrorException(
+                        HttpStatus.BAD_REQUEST));
         Publish p = getById(publishId);
         c.setPublish(p);
         p.getComments().add(c);

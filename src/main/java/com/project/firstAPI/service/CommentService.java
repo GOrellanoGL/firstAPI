@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**Comment Service.**/
 @Service
 public class CommentService {
     /**Sleep.**/
@@ -23,7 +24,7 @@ public class CommentService {
     /** Gets comments.
      * @return completable future with list.
      */
-    public CompletableFuture<List<CommentDTO>> getComments() {
+    public final CompletableFuture<List<CommentDTO>> getComments() {
         try {
             Thread.sleep(sleepThread);
         } catch (InterruptedException e) {

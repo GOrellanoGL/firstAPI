@@ -20,6 +20,7 @@ import java.util.List;
 
 import static java.util.Objects.isNull;
 
+/**Publish.**/
 @Entity
 @Data
 @NoArgsConstructor
@@ -51,7 +52,7 @@ public class Publish {
 
     /**PrePersist.**/
     @PrePersist
-    public void setTime() {
+    public final void setTime() {
         if (isNull(this.getDatePublish())) {
             this.datePublish = LocalDateTime.now();
         }

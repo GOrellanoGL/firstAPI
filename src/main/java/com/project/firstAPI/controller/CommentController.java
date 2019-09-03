@@ -31,16 +31,24 @@ import static java.util.Objects.isNull;
         description = "Operations pertaining to comment management system")
 public class CommentController {
 
-    /**COMMENT_NOT_FOUND.**/
+    /**
+     * COMMENT_NOT_FOUND.
+     **/
     private static final String COMMENT_NOT_FOUND = "Comment ID not found: %s";
-    /**CommentRepository.**/
+    /**
+     * CommentRepository.
+     **/
     @Autowired
     private CommentRepository commentRepository;
-    /**CountCommentByPublishRepository.**/
+    /**
+     * CountCommentByPublishRepository.
+     **/
     @Autowired
     private CountCommentByPublishRepository commentByPublishRepository;
 
-    /** Add comment.
+    /**
+     * Add comment.
+     *
      * @param comment .
      */
     @ApiOperation(value = "Add comment")
@@ -49,7 +57,9 @@ public class CommentController {
         commentRepository.save(comment);
     }
 
-    /** Get all comments.
+    /**
+     * Get all comments.
+     *
      * @return A list with comments.
      */
     @ApiOperation(value = "Get all comments")
@@ -58,29 +68,36 @@ public class CommentController {
         return commentRepository.findAll();
     }
 
-    /**Get specific comment.
-     * @return A comment by id.
+    /**
+     * Get specific comment.
+     *
      * @param id .
+     * @return A comment by id.
      */
     @ApiOperation(value = "Get specific comment by id")
     @GetMapping("/{id}")
     public Comment getCommentById(@PathVariable final Integer id) {
-        return commentRepository.findById(id)
+        return commentRepository
+                .findById(id)
                 .orElseThrow(() -> new HttpClientErrorException(
                         HttpStatus.BAD_REQUEST,
                         String.format(COMMENT_NOT_FOUND, id)));
     }
 
-    /**Delete all comments.**/
+    /**
+     * Delete all comments.
+     **/
     @ApiOperation(value = "Delete all comments")
     @DeleteMapping(value = "")
     public void deleteAllComment() {
         commentRepository.deleteAll();
     }
 
-    /** Delete specific comment.
-     * @return A response entity for delete comment by id.
+    /**
+     * Delete specific comment.
+     *
      * @param id .
+     * @return A response entity for delete comment by id.
      */
     @ApiOperation(value = "Delete specific comment by id")
     public ResponseEntity<?> deleteCommentById(@PathVariable final Integer id) {
@@ -97,7 +114,9 @@ public class CommentController {
         return new ResponseEntity<Comment>(HttpStatus.ACCEPTED);
     }
 
-    /** Get count of comments by publish.
+    /**
+     * Get count of comments by publish.
+     *
      * @return A list wit comment by publish.
      */
     @ApiOperation(value = "Get count of comments by publish")
@@ -106,18 +125,18 @@ public class CommentController {
         return commentByPublishRepository.getCount();
     }
 
-    /** Get count of comments by publish with pagination.
-     * @return A page with comment by publish.
+    /**
+     * Get count of comments by publish with pagination.
+     *
      * @param page .
      * @param size .
+     * @return A page with comment by publish.
      */
     @ApiOperation(value = "Get count of comments by publish with pagination")
     @GetMapping(value = "/countCommentByPublish/pagination")
     public Page<CommentByPublish> listCommentByPublishPageByPage(
-            @RequestParam(value = "page", defaultValue = "1", required = false)
-            final Integer page,
-            @RequestParam(value = "size", defaultValue = "30", required = false)
-            final Integer size) {
+            @RequestParam(value = "page", defaultValue = "1", required = false) final Integer page,
+            @RequestParam(value = "size", defaultValue = "30", required = false) final Integer size) {
         return commentByPublishRepository.getCountWithPagination(
                 PageRequest.of(page - 1, size));
     }

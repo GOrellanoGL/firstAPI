@@ -16,6 +16,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**Swagger config.**/
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -23,7 +24,7 @@ public class SwaggerConfig {
      * @return docket.
      */
     @Bean
-    public Docket api() {
+    public final Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage(
@@ -32,6 +33,8 @@ public class SwaggerConfig {
                 .build().apiInfo(apiEndPointsInfo());
     }
 
+    /**Api endpoints info.
+     * @return api info builder.**/
     private ApiInfo apiEndPointsInfo() {
         return new ApiInfoBuilder().title("Spring Boot REST API")
                 .description("First REST API")

@@ -23,6 +23,7 @@ import java.time.format.DateTimeFormatter;
 
 import static java.util.Objects.isNull;
 
+/**Comment.**/
 @Entity
 @Data
 @NoArgsConstructor
@@ -46,7 +47,7 @@ public class Comment {
 
     /**PrePersist.**/
     @PrePersist
-    public void setTime() {
+    public final void setTime() {
         if (isNull(this.getDateComment())) {
             DateTimeFormatter formatter =
                     DateTimeFormatter.ofPattern("dd-mmm-yyyy");

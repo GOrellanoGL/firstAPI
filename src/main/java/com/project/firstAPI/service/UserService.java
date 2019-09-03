@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**User service.**/
 @Service
 public class UserService {
     /**Sleep thread.**/
@@ -21,7 +22,7 @@ public class UserService {
      * @return completable future of users list.
      */
     @Async("threadPoolTaskExecutor")
-    public CompletableFuture<UserDTO> getUsers() {
+    public final CompletableFuture<UserDTO> getUsers() {
         try {
             Thread.sleep(sleepThread);
         } catch (InterruptedException e) {

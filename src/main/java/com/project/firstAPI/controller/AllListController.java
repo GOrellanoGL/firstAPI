@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**All list controller.**/
 @RequestMapping("/lists")
 @RestController
 @EnableScheduling
@@ -32,7 +33,7 @@ public class AllListController {
      */
     @ApiOperation(value = "Get all list wit user, publish and comment")
     @GetMapping("/allContent")
-    public ResponseEntity<?> getAsync() {
+    public final ResponseEntity<?> getAsync() {
         CompletableFuture<List<User>> userList =
                 listService.getAllUsers();
         CompletableFuture<List<Publish>> publishList =

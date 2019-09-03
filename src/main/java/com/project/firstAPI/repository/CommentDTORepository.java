@@ -1,3 +1,8 @@
+/**
+ * @since 1.0
+ * @author Gonzalo Orellano
+ * @version 1.0
+ */
 package com.project.firstAPI.repository;
 
 import com.project.firstAPI.dto.CommentDTO;
@@ -9,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**CommentDTO repository.**/
 @Repository
 public interface CommentDTORepository extends JpaRepository<
         CommentDTO, Integer> {

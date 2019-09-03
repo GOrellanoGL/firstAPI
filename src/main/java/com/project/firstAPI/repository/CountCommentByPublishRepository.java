@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**Count commenty by publish repository.**/
 @Repository
 public interface CountCommentByPublishRepository extends JpaRepository<
         CommentByPublish, Integer> {

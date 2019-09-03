@@ -5,6 +5,7 @@
  */
 package com.project.firstAPI.interfaces;
 
+/**Count List.**/
 public interface CountList {
     /** Get title.
      * @return A string representing the title.

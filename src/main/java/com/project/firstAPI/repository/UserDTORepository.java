@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**User DTO repository.**/
 @Repository
 public interface UserDTORepository extends JpaRepository<UserDTO, Integer> {
     /**Get users list.

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 
+/**Comment repository.**/
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Integer> {
     /**Delete comment.**/

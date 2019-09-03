@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**Publish service.**/
 @Service
 public class PublishService {
     /**Sleep thread.**/
@@ -21,7 +22,7 @@ public class PublishService {
      * @return completable future of publish list.
      */
     @Async("threadPoolTaskExecutor")
-    public CompletableFuture<List<PublishDTO>> getPublish() {
+    public final CompletableFuture<List<PublishDTO>> getPublish() {
         try {
             Thread.sleep(SLEEP_THREAD);
         } catch (InterruptedException e) {

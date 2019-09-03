@@ -1,12 +1,16 @@
 package com.project.firstAPI;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.
+        SpringBootServletInitializer;
 
+/**Servlet Initializer.**/
 public class ServletInitializer extends SpringBootServletInitializer {
-    /**Spring Application Builder.**/
+    /**Spring Application Builder.
+     * @param application application.
+     * @return configure.**/
     @Override
-    protected SpringApplicationBuilder
+    protected final SpringApplicationBuilder
         configure(final SpringApplicationBuilder application) {
             return application.sources(FirstApiApplication.class);
     }
