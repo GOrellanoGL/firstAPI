@@ -4,14 +4,19 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.
         SpringBootServletInitializer;
 
-/**Servlet Initializer.**/
+/**
+ * Servlet Initializer.
+ **/
 public class ServletInitializer extends SpringBootServletInitializer {
-    /**Spring Application Builder.
+    /**
+     * Spring Application Builder.
+     *
      * @param application application.
-     * @return configure.**/
+     * @return configure.
+     **/
     @Override
     protected final SpringApplicationBuilder
-        configure(final SpringApplicationBuilder application) {
-            return application.sources(FirstApiApplication.class);
+    configure(final SpringApplicationBuilder application) {
+        return application.sources(FirstApiApplication.class);
     }
 }
