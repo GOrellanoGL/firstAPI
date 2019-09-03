@@ -27,6 +27,8 @@
 			</activation>
 			<properties>
 				<sonar.host.url>http://localhost:9000</sonar.host.url>
+				<sonar.exclusions>com/project/apirest/dto/*.java, com/project/apirest/model/*.java</sonar.exclusions>
+				<sonar.coverage.exclusions>com/project/apirest/dto/*.java, com/project/apirest/model/*.java</sonar.coverage.exclusions>
 			</properties>
 			<build>
 				<plugins>
