@@ -48,7 +48,7 @@ public class Comment {
     /**PrePersist.**/
     @PrePersist
     public final void setTime() {
-        if (isNull(this.getDateComment())) {
+        if (isNull(getDateComment())) {
             DateTimeFormatter formatter =
                     DateTimeFormatter.ofPattern("dd-mmm-yyyy");
             LocalDateTime localDateTime = LocalDateTime.now();

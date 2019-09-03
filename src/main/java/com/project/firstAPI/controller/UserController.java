@@ -33,6 +33,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Objects.isNull;
 
+/**User controller.**/
 @RequestMapping("/user")
 @RestController
 @Api(value = "User management system",
@@ -59,6 +60,10 @@ public class UserController {
         userRepository.save(user);
     }
 
+    /**Get user agent.
+     * @param request .
+     * @return user agent.
+     */
     private String getUserAgent(final HttpServletRequest request) {
         return request.getHeader("user-agent");
     }
@@ -71,17 +76,17 @@ public class UserController {
     @PostMapping("/{userId}/{publishId}")
     public void addPublish(@PathVariable final Integer userId,
                            @PathVariable final Integer publishId) {
-        Publish p = publishRepository.findById(publishId)
+        Publish publish = publishRepository.findById(publishId)
                 .orElseThrow(() -> new HttpClientErrorException(
                         HttpStatus.BAD_REQUEST));
-        User u = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new HttpClientErrorException(
                         HttpStatus.BAD_REQUEST,
                         String.format(PERSON_NOT_FOUND, userId)));
-        p.setUser(u);
-        u.getPublishs().add(p);
-        publishRepository.save(p);
-        userRepository.save(u);
+        publish.setUser(user);
+        user.getPublishs().add(publish);
+        publishRepository.save(publish);
+        userRepository.save(user);
     }
 
     /** Get all users.
@@ -95,6 +100,10 @@ public class UserController {
                 user -> convertToDto(user)).collect(Collectors.toList());
     }
 
+    /**Convert to DTO.
+     * @param user User.
+     * @return UserDTO.
+     */
     private UserDTO convertToDto(final User user) {
         final ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(user, UserDTO.class);

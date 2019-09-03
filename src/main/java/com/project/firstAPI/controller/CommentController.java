@@ -25,6 +25,7 @@ import java.util.List;
 
 import static java.util.Objects.isNull;
 
+/**Comment controller.**/
 @RequestMapping("/comment")
 @RestController
 @Api(value = "Comment management system",
@@ -135,8 +136,10 @@ public class CommentController {
     @ApiOperation(value = "Get count of comments by publish with pagination")
     @GetMapping(value = "/countCommentByPublish/pagination")
     public Page<CommentByPublish> listCommentByPublishPageByPage(
-            @RequestParam(value = "page", defaultValue = "1", required = false) final Integer page,
-            @RequestParam(value = "size", defaultValue = "30", required = false) final Integer size) {
+            @RequestParam(value = "page", defaultValue = "1",
+                    required = false) final Integer page,
+            @RequestParam(value = "size", defaultValue = "30",
+                    required = false) final Integer size) {
         return commentByPublishRepository.getCountWithPagination(
                 PageRequest.of(page - 1, size));
     }

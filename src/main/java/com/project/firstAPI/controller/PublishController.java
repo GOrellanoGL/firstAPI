@@ -22,6 +22,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
+/**Publish controller.**/
 @RequestMapping("/publish")
 @RestController
 @EnableScheduling
@@ -59,14 +60,14 @@ public class PublishController {
     @PostMapping("/{userId}/{publishId}")
     public void addCommentToPublish(@PathVariable final Integer userId,
                                     @PathVariable final Integer publishId) {
-        Comment c = commentRepository.findById(publishId)
+        Comment comment = commentRepository.findById(publishId)
                 .orElseThrow(() -> new HttpClientErrorException(
                         HttpStatus.BAD_REQUEST));
-        Publish p = getById(publishId);
-        c.setPublish(p);
-        p.getComments().add(c);
-        commentRepository.save(c);
-        publishRepository.save(p);
+        Publish publish = getById(publishId);
+        comment.setPublish(publish);
+        publish.getComments().add(comment);
+        commentRepository.save(comment);
+        publishRepository.save(publish);
     }
 
     /** Gets all publish.
