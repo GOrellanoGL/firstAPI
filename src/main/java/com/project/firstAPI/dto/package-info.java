@@ -3,4 +3,4 @@
  * @author Gonzalo Orellano
  * @version 1.0
  */
-package com.project.firstAPI.repository;
+package com.project.firstAPI.dto;
