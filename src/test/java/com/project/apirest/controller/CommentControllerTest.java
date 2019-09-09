@@ -12,8 +12,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +24,9 @@ import static org.mockito.Mockito.*;
 
 public class CommentControllerTest {
 
+    private final static HttpClientErrorException HTTP_CLIENT_ERROR_EXCEPTION = new HttpClientErrorException(
+            HttpStatus.BAD_REQUEST,
+            String.format("COMMENT_NOT_FOUND", 10));
     private final static List<Comment> COMMENT_LIST = Arrays.asList(
             new Comment(1, "descripcion 1", "30-08-2019", "Gonzalo Orellano", null),
             new Comment(2, "descripcion 2", "30-08-2019", "Simon Orellano", null)
@@ -65,8 +70,14 @@ public class CommentControllerTest {
     @Test
     public void getCommentById() throws Exception {
         when(commentRepository.findById(ID)).thenReturn(java.util.Optional.of(COMMENT));
-        commentController.deleteCommentById(ID);
+        commentController.getCommentById(ID);
         verify(commentRepository, times(1)).findById(ID);
+    }
+
+    @Test(expected = HttpClientErrorException.class)
+    public void getCommentByIdError() {
+        when(commentRepository.findById(ID)).thenThrow(HTTP_CLIENT_ERROR_EXCEPTION);
+        commentController.getCommentById(ID);
     }
 
     @Test
@@ -80,6 +91,12 @@ public class CommentControllerTest {
         when(commentRepository.findById(ID)).thenReturn(java.util.Optional.of(COMMENT));
         commentController.deleteCommentById(ID);
         verify(commentRepository, times(1)).deleteById(ID);
+    }
+
+    @Test(expected = HttpClientErrorException.class)
+    public void deleteCommentByIdError() {
+        when(commentRepository.findById(ID)).thenThrow(HTTP_CLIENT_ERROR_EXCEPTION);
+        commentController.deleteCommentById(ID);
     }
 
     @Test
@@ -101,4 +118,5 @@ public class CommentControllerTest {
         commentController.listCommentByPublishPageByPage(PAGE, SIZE);
         verify(commentByPublishRepository, times(1)).getCountWithPagination(pageRequest);
     }
+
 }

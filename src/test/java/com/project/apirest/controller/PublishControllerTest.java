@@ -10,8 +10,10 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -21,6 +23,9 @@ import static org.mockito.Mockito.*;
 
 public class PublishControllerTest {
 
+    private final static HttpClientErrorException HTTP_CLIENT_ERROR_EXCEPTION = new HttpClientErrorException(
+            HttpStatus.BAD_REQUEST,
+            String.format("COMMENT_NOT_FOUND", 10));
     private final static User USER = new User(1, "Gonzalo", "Orellano", "", null);
     private final static Publish PUBLISH = new Publish(1, "Titulo 1", "Descripcion 1", LocalDateTime.now(), "", 10, USER, null);
     private final static List<Publish> PUBLISH_LIST = Arrays.asList(
@@ -70,6 +75,12 @@ public class PublishControllerTest {
         verify(publishRepository, times(1)).save(publish);*/
     }
 
+    @Test(expected = HttpClientErrorException.class)
+    public void addCommentToPublishError() {
+        when(commentRepository.findById(ID)).thenThrow(HTTP_CLIENT_ERROR_EXCEPTION);
+        publishController.addCommentToPublish(ID, ID);
+    }
+
     @Test
     public void getAllPublish() throws Exception {
         when(publishRepository.findAll()).thenReturn(PUBLISH_LIST);
@@ -82,6 +93,12 @@ public class PublishControllerTest {
         when(publishRepository.findById(ID)).thenReturn(java.util.Optional.of(PUBLISH));
         publishController.getById(ID);
         verify(publishRepository, times(1)).findById(ID);
+    }
+
+    @Test(expected = HttpClientErrorException.class)
+    public void getByIdError() {
+        when(publishRepository.findById(ID)).thenThrow(HTTP_CLIENT_ERROR_EXCEPTION);
+        publishController.getById(ID);
     }
 
     @Test

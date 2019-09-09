@@ -1,5 +1,6 @@
 package com.project.apirest.controller;
 
+import com.project.apirest.model.Publish;
 import com.project.apirest.model.User;
 import com.project.apirest.repository.PublishRepository;
 import com.project.apirest.repository.UserRepository;
@@ -8,11 +9,14 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -20,11 +24,17 @@ import static org.mockito.Mockito.*;
 
 public class UserControllerTest {
 
+    private final static HttpClientErrorException HTTP_PUBLISH_ERROR_EXCEPTION = new HttpClientErrorException(
+            HttpStatus.BAD_REQUEST);
+    private final static HttpClientErrorException HTTP_CLIENT_ERROR_EXCEPTION = new HttpClientErrorException(
+            HttpStatus.BAD_REQUEST,
+            String.format("PERSON_NOT_FOUND", 10));
     private final static User USER = new User(1, "Gonzalo", "Orellano", "Chrome", null);
     private final static List<User> USER_LIST = Arrays.asList(
             new User(1, "Gonzalo", "Orellano", "Chrome", null),
             new User(2, "Simon", "Orellano", "Firefox", null)
     );
+    private final static Publish PUBLISH = new Publish(1, "Titulo 1", "Descripcion 1", LocalDateTime.now(), "", 10, USER, null);
     private final static Integer ID = 1;
     @Mock
     private UserRepository userRepository;
@@ -60,11 +70,23 @@ public class UserControllerTest {
         verify(userRepository, times(1)).findById(ID);
     }
 
+    @Test(expected = HttpClientErrorException.class)
+    public void getUserByIdError() {
+        when(userRepository.findById(ID)).thenThrow(HTTP_CLIENT_ERROR_EXCEPTION);
+        userController.getUserById(ID);
+    }
+
     @Test
     public void deleteUserById() throws Exception {
         when(userRepository.findById(ID)).thenReturn(java.util.Optional.of(USER));
         userController.deleteUserById(ID);
         verify(userRepository, times(1)).deleteById(ID);
+    }
+
+    @Test(expected = HttpClientErrorException.class)
+    public void deleteUserByIdError() {
+        when(userRepository.findById(ID)).thenThrow(HTTP_CLIENT_ERROR_EXCEPTION);
+        userController.deleteUserById(ID);
     }
 
     @Test
@@ -101,11 +123,30 @@ public class UserControllerTest {
         verify(userRepository, times(1)).save(user);*/
     }
 
+    @Test(expected = HttpClientErrorException.class)
+    public void addPublishError() {
+        when(publishRepository.findById(ID)).thenThrow(HTTP_PUBLISH_ERROR_EXCEPTION);
+        userController.addPublish(ID, ID);
+    }
+
+    @Test(expected = HttpClientErrorException.class)
+    public void addPublishUserError() {
+        when(publishRepository.findById(ID)).thenReturn(java.util.Optional.of(PUBLISH));
+        when(userRepository.findById(ID)).thenThrow(HTTP_CLIENT_ERROR_EXCEPTION);
+        userController.addPublish(ID, ID);
+    }
+
     @Test
     public void updateUser() throws Exception {
         when(userRepository.findById(ID)).thenReturn(java.util.Optional.of(USER));
         userController.updateUser(ID, USER);
         verify(userRepository, times(1)).save(USER);
+    }
+
+    @Test(expected = HttpClientErrorException.class)
+    public void updateUserError() {
+        when(userRepository.findById(ID)).thenThrow(HTTP_CLIENT_ERROR_EXCEPTION);
+        userController.updateUser(ID, USER);
     }
 
 }

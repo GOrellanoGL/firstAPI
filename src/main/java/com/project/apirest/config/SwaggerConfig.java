@@ -24,7 +24,7 @@ public class SwaggerConfig {
      * @return docket.
      */
     @Bean
-    public final Docket api() {
+    public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage(
